@@ -12,8 +12,8 @@ using XuongMay_BE.Data;
 namespace XuongMay_BE.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240817033642_Initial")]
-    partial class Initial
+    [Migration("20240817042857_INIT")]
+    partial class INIT
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -270,11 +270,11 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Models.Order", b =>
                 {
                     b.HasOne("XuongMay_BE.Models.Customer", "Customer")
-                        .WithMany("Orders")
+                        .WithMany()
                         .HasForeignKey("CustomerId");
 
                     b.HasOne("XuongMay_BE.Models.User", "User")
-                        .WithMany("Orders")
+                        .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("Customer");
@@ -285,11 +285,11 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Models.OrderDetail", b =>
                 {
                     b.HasOne("XuongMay_BE.Models.Order", "Order")
-                        .WithMany("OrderDetels")
+                        .WithMany()
                         .HasForeignKey("OrderId");
 
                     b.HasOne("XuongMay_BE.Models.Product", "Product")
-                        .WithMany("OrderDetails")
+                        .WithMany()
                         .HasForeignKey("ProductId");
 
                     b.Navigation("Order");
@@ -300,7 +300,7 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Models.Product", b =>
                 {
                     b.HasOne("XuongMay_BE.Models.Category", "Category")
-                        .WithMany("Products")
+                        .WithMany()
                         .HasForeignKey("CategoryId");
 
                     b.Navigation("Category");
@@ -309,7 +309,7 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Models.ProductionLine", b =>
                 {
                     b.HasOne("XuongMay_BE.Models.User", "Manager")
-                        .WithMany("ProductionLines")
+                        .WithMany()
                         .HasForeignKey("ManagerId");
 
                     b.Navigation("Manager");
@@ -318,15 +318,15 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Models.Task", b =>
                 {
                     b.HasOne("XuongMay_BE.Models.Order", "Order")
-                        .WithMany("Tasks")
+                        .WithMany()
                         .HasForeignKey("OrderId");
 
                     b.HasOne("XuongMay_BE.Models.Product", "Product")
-                        .WithMany("Tasks")
+                        .WithMany()
                         .HasForeignKey("ProductId");
 
                     b.HasOne("XuongMay_BE.Models.ProductionLine", "ProductionLine")
-                        .WithMany("Tasks")
+                        .WithMany()
                         .HasForeignKey("ProductionLineId");
 
                     b.Navigation("Order");
@@ -339,59 +339,16 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Models.User_Role", b =>
                 {
                     b.HasOne("XuongMay_BE.Models.Role", "Role")
-                        .WithMany("User_Roles")
+                        .WithMany()
                         .HasForeignKey("RoleId");
 
                     b.HasOne("XuongMay_BE.Models.User", "User")
-                        .WithMany("User_Roles")
+                        .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("Role");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("XuongMay_BE.Models.Category", b =>
-                {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("XuongMay_BE.Models.Customer", b =>
-                {
-                    b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("XuongMay_BE.Models.Order", b =>
-                {
-                    b.Navigation("OrderDetels");
-
-                    b.Navigation("Tasks");
-                });
-
-            modelBuilder.Entity("XuongMay_BE.Models.Product", b =>
-                {
-                    b.Navigation("OrderDetails");
-
-                    b.Navigation("Tasks");
-                });
-
-            modelBuilder.Entity("XuongMay_BE.Models.ProductionLine", b =>
-                {
-                    b.Navigation("Tasks");
-                });
-
-            modelBuilder.Entity("XuongMay_BE.Models.Role", b =>
-                {
-                    b.Navigation("User_Roles");
-                });
-
-            modelBuilder.Entity("XuongMay_BE.Models.User", b =>
-                {
-                    b.Navigation("Orders");
-
-                    b.Navigation("ProductionLines");
-
-                    b.Navigation("User_Roles");
                 });
 #pragma warning restore 612, 618
         }

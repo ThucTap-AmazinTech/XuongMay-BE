@@ -20,5 +20,12 @@ namespace XuongMay_BE.Data
         public DbSet<Models.Task> Tasks { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<User_Role> User_Roles { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Chuyển đổi giá trị thành decimal
+            modelBuilder.Entity<Order>()
+                .Property(o => o.Total_amount)
+                .HasConversion<decimal>(); 
+        }
     }
 }

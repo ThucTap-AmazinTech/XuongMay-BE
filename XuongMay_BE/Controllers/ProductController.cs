@@ -42,25 +42,13 @@ namespace XuongMay_BE.Controllers
         [HttpPut]
         public async Task<ActionResult<Product>> UpdateProduct(Product product)
         {
-            var dbProduct = await _context.Products
-                                          .Include(p => p.Category) // Nếu cần cập nhật Category
-                                          .Include(p => p.OrderDetails) // Nếu cần cập nhật OrderDetails
-                                          .Include(p => p.Tasks) // Nếu cần cập nhật Tasks
-                                          .FirstOrDefaultAsync(p => p.Id == product.Id);
-
+            var dbProduct = await _context.Products.FindAsync(product.Id);
             if (dbProduct is null)
                 return NotFound("Product not found!");
-
-            // Cập nhật các thuộc tính
-            dbProduct.Name = product.Name;
-            dbProduct.Category = product.Category; // Cập nhật Category nếu cần
-            dbProduct.OrderDetails = product.OrderDetails; // Cập nhật OrderDetails nếu cần
-            dbProduct.Tasks = product.Tasks; // Cập nhật Tasks nếu cần
-
+            dbProduct.Name = dbProduct.Name;
+            dbProduct.CategoryId = dbProduct.CategoryId;
             await _context.SaveChangesAsync();
-
-            // Trả về đối tượng Product đã được cập nhật
-            return Ok(dbProduct);
+            return Ok(await _context.Products.FindAsync(dbProduct.Id));
         }
 
 

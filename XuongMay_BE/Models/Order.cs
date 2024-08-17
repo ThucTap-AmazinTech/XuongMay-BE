@@ -12,6 +12,7 @@ namespace XuongMay_BE.Models
         public virtual Customer Customer { get; set; }
         public virtual User User { get; set; }
 
-
+        public virtual ICollection<OrderDetail> OrderDetels { get; set; }
+        public virtual ICollection<Task> Tasks { get; set; }
     }
 }

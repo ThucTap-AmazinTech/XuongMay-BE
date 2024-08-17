@@ -12,3 +12,25 @@ GET {{XuongMay_BE_HostAddress}}/api/category
 GET {{XuongMay_BE_HostAddress}}/api/category/0
 
 ###
+
+DELETE {{XuongMay_BE_HostAddress}}/api/category?id=0
+
+###
+
+POST {{XuongMay_BE_HostAddress}}/api/category
+Content-Type: application/json
+
+{
+  //Category
+}
+
+###
+
+PUT {{XuongMay_BE_HostAddress}}/api/category
+Content-Type: application/json
+
+{
+  //Category
+}
+
+###

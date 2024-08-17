@@ -5,9 +5,7 @@ namespace XuongMay_BE.Models
     public class Order
     {
         [Key]
-        public string Id { get; set; }
-        public string User_ID { get; set; }
-        public string Customer_ID { get; set; }
+        public int Id { get; set; }
         public Nullable<decimal> Total_amount { get; set; }
         public string Note { get; set; }
 

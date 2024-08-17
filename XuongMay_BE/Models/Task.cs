@@ -5,10 +5,7 @@ namespace XuongMay_BE.Models
     public class Task
     {
         [Key]
-        public string Id { get; set; }
-        public string Order_ID { get; set; }
-        public string ProductionLine_ID { get; set; }
-        public string Product_ID { get; set; }
+        public int Id { get; set; }
         public Nullable<int> completion_rate { get; set; }
         public string Note { get; set; }
 

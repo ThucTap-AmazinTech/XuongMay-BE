@@ -5,8 +5,7 @@ namespace XuongMay_BE.Models
     public class OrderDetail
     {
         [Key]
-        public string Order_ID { get; set; }
-        public string Product_ID { get; set; }
+        public int Id { get; set; }
         public Nullable<int> Quantity { get; set; }
         public string Note { get; set; }
 

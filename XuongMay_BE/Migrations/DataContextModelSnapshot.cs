@@ -24,8 +24,11 @@ namespace XuongMay_BE.Migrations
 
             modelBuilder.Entity("XuongMay_BE.Models.Category", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -37,8 +40,11 @@ namespace XuongMay_BE.Migrations
 
             modelBuilder.Entity("XuongMay_BE.Models.Customer", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -56,14 +62,14 @@ namespace XuongMay_BE.Migrations
 
             modelBuilder.Entity("XuongMay_BE.Models.Order", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Property<string>("CustomerId")
-                        .HasColumnType("nvarchar(450)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Customer_ID")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
@@ -71,11 +77,8 @@ namespace XuongMay_BE.Migrations
                     b.Property<decimal?>("Total_amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("User_ID")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -88,25 +91,25 @@ namespace XuongMay_BE.Migrations
 
             modelBuilder.Entity("XuongMay_BE.Models.OrderDetail", b =>
                 {
-                    b.Property<string>("Order_ID")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OrderId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("ProductId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Product_ID")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("Order_ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
@@ -117,14 +120,14 @@ namespace XuongMay_BE.Migrations
 
             modelBuilder.Entity("XuongMay_BE.Models.Product", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Property<string>("CategoryId")
-                        .HasColumnType("nvarchar(450)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Category_ID")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -138,29 +141,32 @@ namespace XuongMay_BE.Migrations
 
             modelBuilder.Entity("XuongMay_BE.Models.ProductionLine", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Property<string>("Manage_ID")
-                        .HasColumnType("nvarchar(max)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ManagerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ManagerId");
 
                     b.ToTable("ProductionLines");
                 });
 
             modelBuilder.Entity("XuongMay_BE.Models.Role", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -175,29 +181,23 @@ namespace XuongMay_BE.Migrations
 
             modelBuilder.Entity("XuongMay_BE.Models.Task", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OrderId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Order_ID")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("ProductId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Product_ID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProductionLineId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProductionLine_ID")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ProductionLineId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("completion_rate")
                         .HasColumnType("int");
@@ -215,8 +215,11 @@ namespace XuongMay_BE.Migrations
 
             modelBuilder.Entity("XuongMay_BE.Models.User", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -237,23 +240,20 @@ namespace XuongMay_BE.Migrations
 
             modelBuilder.Entity("XuongMay_BE.Models.User_Role", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Role_ID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("User_ID")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -286,7 +286,7 @@ namespace XuongMay_BE.Migrations
                         .HasForeignKey("OrderId");
 
                     b.HasOne("XuongMay_BE.Models.Product", "Product")
-                        .WithMany("OrderDetels")
+                        .WithMany("OrderDetails")
                         .HasForeignKey("ProductId");
 
                     b.Navigation("Order");
@@ -305,11 +305,11 @@ namespace XuongMay_BE.Migrations
 
             modelBuilder.Entity("XuongMay_BE.Models.ProductionLine", b =>
                 {
-                    b.HasOne("XuongMay_BE.Models.User", "User")
+                    b.HasOne("XuongMay_BE.Models.User", "Manager")
                         .WithMany("ProductionLines")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("ManagerId");
 
-                    b.Navigation("User");
+                    b.Navigation("Manager");
                 });
 
             modelBuilder.Entity("XuongMay_BE.Models.Task", b =>
@@ -336,11 +336,11 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Models.User_Role", b =>
                 {
                     b.HasOne("XuongMay_BE.Models.Role", "Role")
-                        .WithMany("User_Role")
+                        .WithMany("User_Roles")
                         .HasForeignKey("RoleId");
 
                     b.HasOne("XuongMay_BE.Models.User", "User")
-                        .WithMany("User_Role")
+                        .WithMany("User_Roles")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Role");
@@ -367,7 +367,7 @@ namespace XuongMay_BE.Migrations
 
             modelBuilder.Entity("XuongMay_BE.Models.Product", b =>
                 {
-                    b.Navigation("OrderDetels");
+                    b.Navigation("OrderDetails");
 
                     b.Navigation("Tasks");
                 });
@@ -379,7 +379,7 @@ namespace XuongMay_BE.Migrations
 
             modelBuilder.Entity("XuongMay_BE.Models.Role", b =>
                 {
-                    b.Navigation("User_Role");
+                    b.Navigation("User_Roles");
                 });
 
             modelBuilder.Entity("XuongMay_BE.Models.User", b =>
@@ -388,7 +388,7 @@ namespace XuongMay_BE.Migrations
 
                     b.Navigation("ProductionLines");
 
-                    b.Navigation("User_Role");
+                    b.Navigation("User_Roles");
                 });
 #pragma warning restore 612, 618
         }

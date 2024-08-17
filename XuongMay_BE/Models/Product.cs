@@ -9,7 +9,7 @@ namespace XuongMay_BE.Models
         public string Name { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetels { get; set; }
         public virtual ICollection<Task> Tasks { get; set; }
     }
 }

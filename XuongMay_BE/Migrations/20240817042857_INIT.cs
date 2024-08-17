@@ -5,7 +5,7 @@
 namespace XuongMay_BE.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class INIT : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

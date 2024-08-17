@@ -12,6 +12,6 @@ namespace XuongMay_BE.Models
         public string Image { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<ProductionLine> ProductionLines { get; set; }
-        public virtual ICollection<User_Role> User_Roles { get; set; }
+        public virtual ICollection<User_Role> User_Role { get; set; }
     }
 }

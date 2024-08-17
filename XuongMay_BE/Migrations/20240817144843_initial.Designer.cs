@@ -12,8 +12,8 @@ using XuongMay_BE.Data;
 namespace XuongMay_BE.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240817142458_UpdateNavigationProperty")]
-    partial class UpdateNavigationProperty
+    [Migration("20240817144843_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

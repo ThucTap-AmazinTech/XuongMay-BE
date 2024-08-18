@@ -12,8 +12,8 @@ using XuongMay_BE.Data;
 namespace XuongMay_BE.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240817042857_INIT")]
-    partial class INIT
+    [Migration("20240817144843_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,10 +33,15 @@ namespace XuongMay_BE.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Categories");
                 });
@@ -129,7 +134,7 @@ namespace XuongMay_BE.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -267,14 +272,21 @@ namespace XuongMay_BE.Migrations
                     b.ToTable("User_Roles");
                 });
 
+            modelBuilder.Entity("XuongMay_BE.Models.Category", b =>
+                {
+                    b.HasOne("XuongMay_BE.Models.Category", null)
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId");
+                });
+
             modelBuilder.Entity("XuongMay_BE.Models.Order", b =>
                 {
                     b.HasOne("XuongMay_BE.Models.Customer", "Customer")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("CustomerId");
 
                     b.HasOne("XuongMay_BE.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Customer");
@@ -285,11 +297,11 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Models.OrderDetail", b =>
                 {
                     b.HasOne("XuongMay_BE.Models.Order", "Order")
-                        .WithMany()
+                        .WithMany("OrderDetels")
                         .HasForeignKey("OrderId");
 
                     b.HasOne("XuongMay_BE.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("OrderDetels")
                         .HasForeignKey("ProductId");
 
                     b.Navigation("Order");
@@ -301,7 +313,9 @@ namespace XuongMay_BE.Migrations
                 {
                     b.HasOne("XuongMay_BE.Models.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
                 });
@@ -309,7 +323,7 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Models.ProductionLine", b =>
                 {
                     b.HasOne("XuongMay_BE.Models.User", "Manager")
-                        .WithMany()
+                        .WithMany("ProductionLines")
                         .HasForeignKey("ManagerId");
 
                     b.Navigation("Manager");
@@ -318,15 +332,15 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Models.Task", b =>
                 {
                     b.HasOne("XuongMay_BE.Models.Order", "Order")
-                        .WithMany()
+                        .WithMany("Tasks")
                         .HasForeignKey("OrderId");
 
                     b.HasOne("XuongMay_BE.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("Tasks")
                         .HasForeignKey("ProductId");
 
                     b.HasOne("XuongMay_BE.Models.ProductionLine", "ProductionLine")
-                        .WithMany()
+                        .WithMany("Tasks")
                         .HasForeignKey("ProductionLineId");
 
                     b.Navigation("Order");
@@ -339,16 +353,59 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Models.User_Role", b =>
                 {
                     b.HasOne("XuongMay_BE.Models.Role", "Role")
-                        .WithMany()
+                        .WithMany("User_Role")
                         .HasForeignKey("RoleId");
 
                     b.HasOne("XuongMay_BE.Models.User", "User")
-                        .WithMany()
+                        .WithMany("User_Role")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("XuongMay_BE.Models.Category", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("XuongMay_BE.Models.Customer", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("XuongMay_BE.Models.Order", b =>
+                {
+                    b.Navigation("OrderDetels");
+
+                    b.Navigation("Tasks");
+                });
+
+            modelBuilder.Entity("XuongMay_BE.Models.Product", b =>
+                {
+                    b.Navigation("OrderDetels");
+
+                    b.Navigation("Tasks");
+                });
+
+            modelBuilder.Entity("XuongMay_BE.Models.ProductionLine", b =>
+                {
+                    b.Navigation("Tasks");
+                });
+
+            modelBuilder.Entity("XuongMay_BE.Models.Role", b =>
+                {
+                    b.Navigation("User_Role");
+                });
+
+            modelBuilder.Entity("XuongMay_BE.Models.User", b =>
+                {
+                    b.Navigation("Orders");
+
+                    b.Navigation("ProductionLines");
+
+                    b.Navigation("User_Role");
                 });
 #pragma warning restore 612, 618
         }

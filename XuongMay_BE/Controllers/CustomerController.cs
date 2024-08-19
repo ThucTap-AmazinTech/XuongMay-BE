@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using XuongMay_BE.Contract.Repositories.Models;
 using XuongMay_BE.Data;
-using XuongMay_BE.Models;
 
 namespace XuongMay_BE.Controllers
 {

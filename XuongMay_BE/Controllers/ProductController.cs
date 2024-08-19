@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using XuongMay_BE.Data;
-using XuongMay_BE.Models;
+using XuongMay_BE.Contract.Repositories.Models;
 
 namespace XuongMay_BE.Controllers
 {
@@ -45,8 +45,13 @@ namespace XuongMay_BE.Controllers
             var dbProduct = await _context.Products.FindAsync(product.Id);
             if (dbProduct is null)
                 return NotFound("Product not found!");
-            dbProduct.Name = dbProduct.Name;
-            dbProduct.CategoryId = dbProduct.CategoryId;
+            dbProduct.Name = product.Name;
+            var dbCategory = await _context.Categories.FindAsync(product.CategoryId);
+            if (dbCategory is null)
+                return NotFound("Category not found!");
+            dbProduct.CategoryId = product.CategoryId;
+            dbProduct.Category = dbCategory;
+            dbCategory.Products.Add(dbProduct);
             await _context.SaveChangesAsync();
             return Ok(await _context.Products.FindAsync(dbProduct.Id));
         }

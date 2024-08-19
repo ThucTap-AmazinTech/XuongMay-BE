@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace XuongMay_BE.Models
+namespace XuongMay_BE.Contract.Repositories.Models
 {
     public class Customer
     {
@@ -9,7 +9,7 @@ namespace XuongMay_BE.Models
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Order> Orders { get; }
      
     }
 }

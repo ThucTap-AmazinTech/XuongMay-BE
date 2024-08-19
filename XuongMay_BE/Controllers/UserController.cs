@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using XuongMay_BE.Data;
-using XuongMay_BE.Models;
+using XuongMay_BE.Contract.Repositories.Models;
 
 namespace XuongMay_BE.Controllers
 {

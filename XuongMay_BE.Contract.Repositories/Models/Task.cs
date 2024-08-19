@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace XuongMay_BE.Models
+namespace XuongMay_BE.Contract.Repositories.Models
 {
     public class Task
     {

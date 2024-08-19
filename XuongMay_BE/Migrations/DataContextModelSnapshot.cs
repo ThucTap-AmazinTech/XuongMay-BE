@@ -30,15 +30,10 @@ namespace XuongMay_BE.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
 
                     b.ToTable("Categories");
                 });
@@ -269,13 +264,6 @@ namespace XuongMay_BE.Migrations
                     b.ToTable("User_Roles");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Models.Category", b =>
-                {
-                    b.HasOne("XuongMay_BE.Models.Category", null)
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId");
-                });
-
             modelBuilder.Entity("XuongMay_BE.Models.Order", b =>
                 {
                     b.HasOne("XuongMay_BE.Models.Customer", "Customer")
@@ -294,11 +282,11 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Models.OrderDetail", b =>
                 {
                     b.HasOne("XuongMay_BE.Models.Order", "Order")
-                        .WithMany("OrderDetels")
+                        .WithMany("OrderDetails")
                         .HasForeignKey("OrderId");
 
                     b.HasOne("XuongMay_BE.Models.Product", "Product")
-                        .WithMany("OrderDetels")
+                        .WithMany("OrderDetails")
                         .HasForeignKey("ProductId");
 
                     b.Navigation("Order");
@@ -309,7 +297,7 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Models.Product", b =>
                 {
                     b.HasOne("XuongMay_BE.Models.Category", "Category")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -374,14 +362,14 @@ namespace XuongMay_BE.Migrations
 
             modelBuilder.Entity("XuongMay_BE.Models.Order", b =>
                 {
-                    b.Navigation("OrderDetels");
+                    b.Navigation("OrderDetails");
 
                     b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("XuongMay_BE.Models.Product", b =>
                 {
-                    b.Navigation("OrderDetels");
+                    b.Navigation("OrderDetails");
 
                     b.Navigation("Tasks");
                 });

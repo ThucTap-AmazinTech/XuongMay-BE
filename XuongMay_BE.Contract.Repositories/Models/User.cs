@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using XuongMay_BE.Core.Base;
 
 namespace XuongMay_BE.Contract.Repositories.Models
 {
-    public class User
+    public class User : BaseModel
     {
-        [Key]
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }

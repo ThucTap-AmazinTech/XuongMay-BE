@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using XuongMay_BE.Core.Base;
 
 namespace XuongMay_BE.Contract.Repositories.Models
 {
-    public class OrderDetail
+    public class OrderDetail : BaseModel
     {
-        [Key]
-        public int Id { get; set; }
         public Nullable<int> Quantity { get; set; }
         public string Note { get; set; }
         public virtual Order Order { get; set; }

@@ -29,7 +29,7 @@ namespace XuongMay_BE
         {
             services.AddDbContext<DatabaseContext>(options =>
             {
-                options.UseLazyLoadingProxies().UseSqlServer(configuration.GetConnectionString("DbConnect"));
+                options.UseLazyLoadingProxies().UseSqlServer(configuration.GetConnectionString("DbConnect"), b => b.MigrationsAssembly("XuongMay_BE"));
             });
         }
         

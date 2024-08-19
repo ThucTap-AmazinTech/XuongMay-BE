@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using XuongMay_BE;
-using XuongMay_BE.Data;
 using XuongMay_BE.Contract.Repositories.Models;
 
 var builder = WebApplication.CreateBuilder(args);

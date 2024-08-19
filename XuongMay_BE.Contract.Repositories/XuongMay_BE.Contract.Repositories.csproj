@@ -16,4 +16,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\XuongMay_BE.Core\XuongMay_BE.Core.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -8,6 +8,6 @@ namespace XuongMay_BE.Contract.Repositories.Models
     {
         public string Name { get; set; }
         [JsonIgnore]
-        public virtual ICollection<Product> Products { get; }
+        public virtual ICollection<Product>? Products { get; }
     }
 }

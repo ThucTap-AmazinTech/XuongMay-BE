@@ -10,5 +10,6 @@ namespace XuongMay_BE.Contract.Services.IService
     public interface ICategoryService
     {
         Task<IList<Category>> GetAll(); 
+        Task 
     }
 }

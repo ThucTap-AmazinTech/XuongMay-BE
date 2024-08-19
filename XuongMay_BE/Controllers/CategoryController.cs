@@ -20,7 +20,7 @@ namespace XuongMay_BE.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllCategories()
         {
-            IList<Contract.Repositories.Models.Category> categories = await _categoryService.GetAll();
+            IList<Category> categories = await _categoryService.GetAll();
             return Ok(categories);
         }
 

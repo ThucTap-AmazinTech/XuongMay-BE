@@ -37,7 +37,6 @@ namespace XuongMay_BE.Repositories.UnitOfWork
         {
             T entity = await _dbSet.FindAsync(id) ?? throw new Exception();
             _dbSet.Remove(entity);
-
         }
 
         public async Task<IList<T>> GetAllAsync()
@@ -50,6 +49,7 @@ namespace XuongMay_BE.Repositories.UnitOfWork
             return await _dbSet.FindAsync(id);
         }
 
+        // Không gọi hàm này khi lưu lại thay đổi trong dbSet, chỉ gọi phương thức SaveAsync() của UOW
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();

@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using XuongMay_BE.Contract.Repositories.Models;
+using XuongMay_BE.Contract.Repositories.Repositories;
 using XuongMay_BE.Contract.Services.IService;
+using Task = System.Threading.Tasks.Task;
 
 namespace XuongMay_BE.Controllers
 {
@@ -23,43 +25,46 @@ namespace XuongMay_BE.Controllers
             return Ok(categories);
         }
 
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Category>> GetCategory(int id)
-        //{
-        //    var category = await _context.Categories.FindAsync(id);
-        //    if (category is null)
-        //        return NotFound("Category not found!");
-        //    return Ok(category);
-        //}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCategoryById(string id)
+        {
+            Category category = await _categoryService.GetById(id);
+            if (category is null)
+                return NotFound("Category not found!");
+            return Ok(category);
+        }
 
-        //[HttpPost]
-        //public async Task<ActionResult<List<Category>>> AddCategory(Category category)
-        //{
-        //    _context.Categories.Add(category);
-        //    await _context.SaveChangesAsync();
-        //    return Ok(await _context.Categories.ToListAsync());
-        //}
+        [HttpPost]
+        public async Task<IActionResult> AddCategory(Category category)
+        {
+            await _categoryService.Add(category);
+            return Ok();
+        }
 
-        //[HttpPut]
-        //public async Task<ActionResult<Category>> UpdateCategory(Category category)
-        //{
-        //    var dbCategory = await _context.Categories.FindAsync(category.Id);
-        //    if (dbCategory is null)
-        //        return NotFound("Category not found!");
-        //    dbCategory.Name = category.Name;
-        //    await _context.SaveChangesAsync();
-        //    return Ok(await _context.Categories.FindAsync(category.Id));
-        //}
+        [HttpDelete]
+        public async Task<IActionResult> DeleteCategory(string id)
+        {
+            try
+            {
+                await _categoryService.Delete(id);
+                return Ok();
+            } catch (Exception ex)
+            {
+                return NotFound("Category not found!");
+            }
+        }
 
-        //[HttpDelete]
-        //public async Task<ActionResult<List<Category>>> DeleteCategory(int id)
-        //{
-        //    var category = await _context.Categories.FindAsync(id);
-        //    if (category is null)
-        //        return NotFound("Category not found!");
-        //    _context.Remove(category);
-        //    await _context.SaveChangesAsync();
-        //    return Ok(await _context.Categories.ToListAsync());
-        //}
+        [HttpPut]
+        public async Task<IActionResult> UpdateCategory(Category category)
+        {
+            try
+            {
+                await _categoryService.Update(category);
+                return Ok();
+            } catch (Exception ex)
+            {
+                return NotFound("Category not found!");
+            }
+        }
     }
 }

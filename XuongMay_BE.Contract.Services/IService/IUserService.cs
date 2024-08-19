@@ -8,12 +8,12 @@ using Task = System.Threading.Tasks.Task;
 
 namespace XuongMay_BE.Contract.Services.IService
 {
-    public interface ICategoryService
+    public interface IUserService
     {
-        Task<IList<Category>> GetAll(); 
-        Task<Category?> GetById(object id);
-        Task Add(Category category);
-        Task Update(Category category);
+        Task<IList<User>> GetAll();
+        Task<User?> GetById(object id);
+        Task Add(User user);
+        Task Update(User user);
         Task Delete(object id);
     }
 }

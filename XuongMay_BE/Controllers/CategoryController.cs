@@ -11,6 +11,7 @@ namespace XuongMay_BE.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
@@ -20,7 +21,6 @@ namespace XuongMay_BE.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetAllCategories()
         {
             IList<Category> categories = await _categoryService.GetAll();
@@ -28,7 +28,6 @@ namespace XuongMay_BE.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
         public async Task<IActionResult> GetCategoryById(string id)
         {
             Category category = await _categoryService.GetById(id);

@@ -1,71 +1,79 @@
-﻿//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.EntityFrameworkCore;
-//using XuongMay_BE.Data;
-//using XuongMay_BE.Contract.Repositories.Entities;
-
-//namespace XuongMay_BE.Controllers
-//{
-//    [Route("api/[controller]")]
-//    [ApiController]
-//    public class ProductController : ControllerBase
-//    {
-//        private readonly DataContext _context;
-//        public ProductController(DataContext context)
-//        {
-//            _context = context;
-//        }
-
-//        [HttpGet]
-//        public async Task<ActionResult<List<Product>>> GetAllProducts()
-//        {
-//            var products = await _context.Products.ToListAsync();
-//            return Ok(products);
-//        }
-
-//        [HttpGet("{id}")]
-//        public async Task<ActionResult<Product>> GetProduct(int id)
-//        {
-//            var product = await _context.Products.FindAsync(id);
-//            if (product is null)
-//                return NotFound("Product not found!");
-//            return Ok(product);
-//        }
-
-//        [HttpPost]
-//        public async Task<ActionResult<List<Product>>> AddProduct(Product product)
-//        {
-//            _context.Products.Add(product);
-//            await _context.SaveChangesAsync();
-//            return Ok(await _context.Products.ToListAsync());
-//        }
-
-//        [HttpPut]
-//        public async Task<ActionResult<Product>> UpdateProduct(Product product)
-//        {
-//            var dbProduct = await _context.Products.FindAsync(product.Id);
-//            if (dbProduct is null)
-//                return NotFound("Product not found!");
-//            dbProduct.Name = product.Name;
-//            var dbCategory = await _context.Categories.FindAsync(product.CategoryId);
-//            if (dbCategory is null)
-//                return NotFound("Category not found!");
-//            dbProduct.CategoryId = product.CategoryId;
-//            dbProduct.Category = dbCategory;
-//            dbCategory.Products.Add(dbProduct);
-//            await _context.SaveChangesAsync();
-//            return Ok(await _context.Products.FindAsync(dbProduct.Id));
-//        }
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Channels;
+using XuongMay_BE.Contract.Repositories.Entities;
+using XuongMay_BE.Contract.Repositories.Repositories;
+using XuongMay_BE.Contract.Services.IService;
+using XuongMay_BE.Services;
 
 
-//        [HttpDelete("{id}")]
-//        public async Task<ActionResult<List<Product>>> DeleteProduct(int id)
-//        {
-//            var product = await _context.Products.FindAsync(id);
-//            if (product is null)
-//                return NotFound("Product not found!");
-//            _context.Products.Remove(product);
-//            await _context.SaveChangesAsync();
-//            return Ok(await _context.Products.ToListAsync());
-//        }
-//    }
-//}
+namespace XuongMay_BE.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ProductController : ControllerBase
+    {
+        private readonly IProductService _ProductService;
+
+        public ProductController(IProductService ProductService)
+        {
+            _ProductService = ProductService;
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllProducts()
+        {
+            IList<Product> categories = await _ProductService.GetAll();
+            return Ok(categories);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProductById(string id)
+        {
+            Product Product = await _ProductService.GetById(id);
+            if (Product is null)
+                return NotFound("Product not found!");
+            return Ok(Product);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> AddProduct([FromBody] Product product)
+        {
+            // Nếu Orders là null, khởi tạo nó với mảng rỗng
+
+
+            await _ProductService.Add(product);
+            return Ok();
+        }
+
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteProduct(string id)
+        {
+            try
+            {
+                await _ProductService.Delete(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return NotFound("Product not found!");
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateProduct(Product Product)
+        {
+            try
+            {
+                await _ProductService.Update(Product);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return NotFound("Product not found!");
+            }
+        }
+    }
+}

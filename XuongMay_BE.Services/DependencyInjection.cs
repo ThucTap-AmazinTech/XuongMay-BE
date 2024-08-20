@@ -23,6 +23,8 @@ namespace XuongMay_BE.Services
         public static void AddServices(this IServiceCollection services)
         {
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductionLineService, ProductionLineService>();
             // Đăng ký thêm các service khác nếu có
         }
     }

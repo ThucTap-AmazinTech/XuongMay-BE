@@ -15,5 +15,7 @@ namespace XuongMay_BE.Contract.Services.IService
         Task Add(User user);
         Task Update(User user);
         Task Delete(object id);
+        Task<User?> Login(string username, string password);
+        Task Signup(User user);
     }
 }

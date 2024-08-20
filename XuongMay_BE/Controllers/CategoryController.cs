@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using XuongMay_BE.Contract.Repositories.Entities;
@@ -19,6 +20,7 @@ namespace XuongMay_BE.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllCategories()
         {
             IList<Category> categories = await _categoryService.GetAll();
@@ -26,6 +28,7 @@ namespace XuongMay_BE.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetCategoryById(string id)
         {
             Category category = await _categoryService.GetById(id);

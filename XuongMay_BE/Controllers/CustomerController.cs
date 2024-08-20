@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using XuongMay_BE.Data;
-using XuongMay_BE.Models;
+using XuongMay_BE.Contract.Repositories.Models;
+using XuongMay_BE.Contract.Repositories.Repositories;
+using XuongMay_BE.Contract.Services.IService;
+using XuongMay_BE.Services;
+
 
 namespace XuongMay_BE.Controllers
 {
@@ -10,58 +13,66 @@ namespace XuongMay_BE.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly ICustomerService _CustomerService;
 
-        public CustomerController(DataContext context)
+        public CustomerController(ICustomerService CustomerService)
         {
-            _context = context;
+            _CustomerService = CustomerService;
         }
-        //Get all customer
         [HttpGet]
-        public async Task<ActionResult<List<Category>>> GetAllCustomer()
+        public async Task<IActionResult> GetAllCustomers()
         {
-            var customers = await _context.Customers.ToListAsync();
-            return Ok(customers);
-        }
-        //Get customer by ID
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Category>> GetCustomer(int id)
-        {
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer is null)
-                return NotFound("Customer not found!");
-            return Ok(customer);
-        }
-        //Add new customer
-        [HttpPost]
-        public async Task<ActionResult<List<Customer>>> AddCustomer(Customer customer)
-        {
-            _context.Customers.Add(customer);
-            await _context.SaveChangesAsync();
-            return Ok(await _context.Customers.ToListAsync());
-        }
-        //Update customer by ID
-        [HttpPut]
-        public async Task<ActionResult<Category>> UpdateCustomer(Customer customer)
-        {
-            var dbCustomer = await _context.Categories.FindAsync(customer.Id);
-            if (dbCustomer is null)
-                return NotFound("Category not found!");
-            dbCustomer.Name = dbCustomer.Name;
-            await _context.SaveChangesAsync();
-            return Ok(await _context.Categories.FindAsync(dbCustomer.Id));
-        }
-        //Delete customer by ID
-        [HttpDelete]
-        public async Task<ActionResult<List<Category>>> DeleteCustomer(int id)
-        {
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer is null)
-                return NotFound("Customer not found!");
-            _context.Remove(customer);
-            await _context.SaveChangesAsync();
-            return Ok(await _context.Categories.ToListAsync());
+            IList<Customer> categories = await _CustomerService.GetAll();
+            return Ok(categories);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCustomerById(string id)
+        {
+            Customer Customer = await _CustomerService.GetById(id);
+            if (Customer is null)
+                return NotFound("Customer not found!");
+            return Ok(Customer);
+        }
+
+    
+        [HttpPost]
+        public async Task<IActionResult> AddCustomer([FromBody] Customer customer)
+        {
+            // Nếu Orders là null, khởi tạo nó với mảng rỗng
+           
+
+            await _CustomerService.Add(customer);
+            return Ok();
+        }
+
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteCustomer(string id)
+        {
+            try
+            {
+                await _CustomerService.Delete(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return NotFound("Customer not found!");
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateCustomer(Customer Customer)
+        {
+            try
+            {
+                await _CustomerService.Update(Customer);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return NotFound("Customer not found!");
+            }
+        }
     }
 }

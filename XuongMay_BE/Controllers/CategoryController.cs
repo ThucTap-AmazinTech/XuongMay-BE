@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using XuongMay_BE.Data;
-using XuongMay_BE.Models;
+using XuongMay_BE.Contract.Repositories.Models;
+using XuongMay_BE.Contract.Repositories.Repositories;
+using XuongMay_BE.Contract.Services.IService;
+using Task = System.Threading.Tasks.Task;
 
 namespace XuongMay_BE.Controllers
 {
@@ -10,56 +12,59 @@ namespace XuongMay_BE.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly DataContext _context;
-        public CategoryController(DataContext context)
+        private readonly ICategoryService _categoryService;
+        public CategoryController(ICategoryService categoryService)
         {
-            _context = context;
+            _categoryService = categoryService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Category>>> GetAllCategories()
+        public async Task<IActionResult> GetAllCategories()
         {
-            var categories = await _context.Categories.ToListAsync();
+            IList<Category> categories = await _categoryService.GetAll();
             return Ok(categories);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Category>> GetCategory(int id)
+        public async Task<IActionResult> GetCategoryById(string id)
         {
-            var category = await _context.Categories.FindAsync(id);
+            Category category = await _categoryService.GetById(id);
             if (category is null)
                 return NotFound("Category not found!");
             return Ok(category);
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Category>>> AddCategory(Category category)
+        public async Task<IActionResult> AddCategory(Category category)
         {
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
-            return Ok(await _context.Categories.ToListAsync());
-        }
-
-        [HttpPut]
-        public async Task<ActionResult<Category>> UpdateCategory(Category category)
-        {
-            var dbCategory = await _context.Categories.FindAsync(category.Id);
-            if (dbCategory is null)
-                return NotFound("Category not found!");
-            dbCategory.Name = category.Name;
-            await _context.SaveChangesAsync();
-            return Ok(await _context.Categories.FindAsync(category.Id));
+            await _categoryService.Add(category);
+            return Ok();
         }
 
         [HttpDelete]
-        public async Task<ActionResult<List<Category>>> DeleteCategory(int id)
+        public async Task<IActionResult> DeleteCategory(string id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            if (category is null)
+            try
+            {
+                await _categoryService.Delete(id);
+                return Ok();
+            } catch (Exception ex)
+            {
                 return NotFound("Category not found!");
-            _context.Remove(category);
-            await _context.SaveChangesAsync();
-            return Ok(await _context.Categories.ToListAsync());
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateCategory(Category category)
+        {
+            try
+            {
+                await _categoryService.Update(category);
+                return Ok();
+            } catch (Exception ex)
+            {
+                return NotFound("Category not found!");
+            }
         }
     }
 }

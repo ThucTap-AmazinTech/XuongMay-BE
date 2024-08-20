@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using XuongMay_BE.Data;
-using XuongMay_BE.Models;
+using XuongMay_BE;
+using XuongMay_BE.Contract.Repositories.Models;
+using XuongMay_BE.Contract.Services.IService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,10 +11,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<DataContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnect"));
-});
+builder.Services.AddConfig(builder.Configuration);
+
+//builder.Services.AddDbContext<DataContext>(options =>
+//{
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnect"));
+//});
+
+
 
 var app = builder.Build();
 

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using XuongMay_BE;
 using XuongMay_BE.Contract.Repositories.Models;
+using XuongMay_BE.Contract.Services.IService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,8 @@ builder.Services.AddConfig(builder.Configuration);
 //{
 //    options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnect"));
 //});
+
+
 
 var app = builder.Build();
 

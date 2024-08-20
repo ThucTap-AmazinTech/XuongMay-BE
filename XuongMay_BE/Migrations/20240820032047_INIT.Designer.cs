@@ -12,7 +12,7 @@ using XuongMay_BE.Repositories.DataContext;
 namespace XuongMay_BE.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240819144048_INIT")]
+    [Migration("20240820032047_INIT")]
     partial class INIT
     {
         /// <inheritdoc />

@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 using XuongMay_BE.Core.Base;
 
-namespace XuongMay_BE.Contract.Repositories.Models
+namespace XuongMay_BE.Contract.Repositories.Entities
 {
     public class Customer : BaseModel
     {

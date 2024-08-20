@@ -1,7 +1,7 @@
 ﻿
 //using Microsoft.AspNetCore.Mvc;
 //using XuongMay_BE.Data;
-//using XuongMay_BE.Contract.Repositories.Models;
+//using XuongMay_BE.Contract.Repositories.Entities;
 //using Microsoft.EntityFrameworkCore;
 //namespace XuongMay_BE.Controllers
 //{

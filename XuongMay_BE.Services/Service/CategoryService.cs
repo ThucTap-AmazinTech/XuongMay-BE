@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XuongMay_BE.Contract.Repositories.IUnitOfWork;
-using XuongMay_BE.Contract.Repositories.Models;
+using XuongMay_BE.Contract.Repositories.Entities;
 using XuongMay_BE.Contract.Repositories.Repositories;
 using XuongMay_BE.Contract.Services.IService;
+using XuongMay_BE.Core.Utils;
 using Task = System.Threading.Tasks.Task;
 
 namespace XuongMay_BE.Services.Service
@@ -22,8 +23,9 @@ namespace XuongMay_BE.Services.Service
 
         public async Task Add(Category category)
         {
-            category.Id = Guid.NewGuid().ToString("N");
             IGenericRepository<Category> genericRepository = _unitOfWork.GetGenericRepository<Category>();
+            category.CreatedAt = CoreHelper.SystemTimeNow;
+            category.DeletedAt = CoreHelper.SystemTimeNow;
             await genericRepository.AddAsync(category);
             await _unitOfWork.SaveAsync();
         }
@@ -48,6 +50,7 @@ namespace XuongMay_BE.Services.Service
         public async Task Update(Category category)
         {
             IGenericRepository<Category> genericRepository = _unitOfWork.GetGenericRepository<Category>();
+            category.UpdatedAt = CoreHelper.SystemTimeNow;
             await genericRepository.UpdateAsync(category);
             await _unitOfWork.SaveAsync();
         }

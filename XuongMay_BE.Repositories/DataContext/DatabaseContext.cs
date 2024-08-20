@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using XuongMay_BE.Contract.Repositories.Models;
+using XuongMay_BE.Contract.Repositories.Entities;
 
 namespace XuongMay_BE.Repositories.DataContext
 {
@@ -21,7 +21,7 @@ namespace XuongMay_BE.Repositories.DataContext
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductionLine> ProductionLines { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<Contract.Repositories.Models.Task> Tasks { get; set; }
+        public DbSet<Contract.Repositories.Entities.Task> Tasks { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<User_Role> User_Roles { get; set; }
 
@@ -31,6 +31,12 @@ namespace XuongMay_BE.Repositories.DataContext
             modelBuilder.Entity<Order>()
                 .Property(o => o.Total_amount)
                 .HasConversion<decimal>();
+            // Username & Email của người dùng là Unique
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasIndex(e => e.Username).IsUnique();
+                entity.HasIndex(e => e.Email).IsUnique();
+            });
         }
     }
 }

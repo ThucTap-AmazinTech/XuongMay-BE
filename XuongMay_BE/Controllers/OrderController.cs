@@ -1,65 +1,88 @@
 ﻿
-//using Microsoft.AspNetCore.Mvc;
-//using XuongMay_BE.Data;
-//using XuongMay_BE.Contract.Repositories.Models;
-//using Microsoft.EntityFrameworkCore;
-//namespace XuongMay_BE.Controllers
-//{
-//    [Route("api/[controller]")]
-//    [ApiController]
-//    public class OrderController : ControllerBase
-//    {
-//        private readonly DataContext _context;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using XuongMay_BE.Contract.Repositories.Entities;
+using XuongMay_BE.Contract.Services.IService;
+using XuongMay_BE.Services.Service;
 
-//        public OrderController(DataContext context)
-//        {
-//            _context = context;
-//        }
-//        //Get all Order
-//        [HttpGet]
-//        public async Task<ActionResult<List<Order>>> GetAlOrder()
-//        {
-//            var orfer = await _context.Orders.ToListAsync();
-//            return Ok(orfer);
-//        }
-//        //Get Order by ID
-//        [HttpGet("{id}")]
-//        public async Task<ActionResult<Category>> GetOrder(int id)
-//        {
-//            var order = await _context.Orders.FindAsync(id);
-//            if (order is null)
-//                return NotFound("Order not found!");
-//            return Ok(order);
-//        }
-//        //Add new Order
-//        [HttpPost]
-//        public async Task<ActionResult<List<Order>>> AddOrder(Order order)
-//        {
-//            _context.Orders.Add(order);
-//            await _context.SaveChangesAsync();
-//            return Ok(await _context.Orders.ToListAsync());
-//        }
-//        //Update Order by ID
-//        [HttpPut]
-//        public async Task<ActionResult<Category>> UpdateOrder(Order order)
-//        {
-//            var dbOrder = await _context.Categories.FindAsync(order.Id);
-//            if (dbOrder is null)
-//                return NotFound("Category not found!");
-//            dbOrder.Name = dbOrder.Name;
-//            await _context.SaveChangesAsync();
-//            return Ok(await _context.Categories.FindAsync(dbOrder.Id));
-//        }
-//        //Delete Order by ID
-//        [HttpDelete]
-//        public async Task<ActionResult<List<Category>>> DeleteOrder(int id)
-//        {
-//            var order = await _context.Orders.FindAsync(id);
-//            if (order is null)
-//                return NotFound("Order not found!");
-//            _context.Remove(order);
-//            await _context.SaveChangesAsync();
-//            return Ok(await _context.Categories.ToListAsync());
-//        }
-//    }
-//}
+namespace XuongMay_BE.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class OrderController : ControllerBase
+    {
+        private readonly IOrderService _OrderService;
+        public OrderController(IOrderService OrderService)
+        {
+            _OrderService = OrderService;
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllOrders()
+        {
+            IList<Order> orders = await _OrderService.GetAll();
+            return Ok(orders);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOrderById(string id)
+        {
+            Order order = await _OrderService.GetById(id);
+            if (order is null)
+                return NotFound("Order not found!");
+            return Ok(order);
+        }
+
+
+        //[HttpPost]
+        //public async Task<IActionResult> AddOrder([FromBody] Order order)
+        //{
+        //    var user = await _userService.GetById(orderDto.UserId);
+        //    var customer = await _customerService.GetById(orderDto.CustomerId);
+
+        //    if (user == null || customer == null)
+        //    {
+        //        return BadRequest("Invalid User or Customer ID");
+        //    }
+
+        //    var order = new Order
+        //    {
+        //        Total_amount = orderDto.Total_amount,
+        //        Note = orderDto.Note,
+        //        User = user,
+        //        Customer = customer
+        //    };
+
+        //    await _orderService.Add(order);
+        //    return Ok(await _orderService.GetAll());
+        //}
+
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteOrder(string id)
+        {
+            try
+            {
+                await _OrderService.Delete(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return NotFound("Order not found!");
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateOrder(Order order)
+        {
+            try
+            {
+                await _OrderService.Update(order);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return NotFound("Order not found!");
+            }
+        }
+    }
+}

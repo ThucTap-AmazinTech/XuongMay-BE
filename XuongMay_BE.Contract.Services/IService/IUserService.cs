@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using XuongMay_BE.Contract.Repositories.Models;
+﻿using XuongMay_BE.Contract.Repositories.Entities;
 using Task = System.Threading.Tasks.Task;
 
 namespace XuongMay_BE.Contract.Services.IService
@@ -15,5 +10,7 @@ namespace XuongMay_BE.Contract.Services.IService
         Task Add(User user);
         Task Update(User user);
         Task Delete(object id);
+        Task<User?> Login(string username, string password);
+        Task Signup(User user);
     }
 }

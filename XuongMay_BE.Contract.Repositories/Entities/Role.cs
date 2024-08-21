@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using XuongMay_BE.Core.Base;
 
-namespace XuongMay_BE.Contract.Repositories.Models
+namespace XuongMay_BE.Contract.Repositories.Entities
 {
     public class Role : BaseModel
     {

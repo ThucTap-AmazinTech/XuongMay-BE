@@ -40,7 +40,9 @@ namespace XuongMay_BE
 
         public static void AddServices(this IServiceCollection services)
         {
-            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICategoryService, CategoryService>()
+                .AddScoped<IUserService, UserService>()
+                .AddScoped<ICustomerService, CustomerService>();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using XuongMay_BE.Contract.Repositories.Models;
+using XuongMay_BE.Contract.Repositories.Entities;
 using XuongMay_BE.Contract.Repositories.Repositories;
 using XuongMay_BE.Contract.Services.IService;
 using XuongMay_BE.Services;
@@ -43,7 +43,7 @@ namespace XuongMay_BE.Controllers
            
 
             await _CustomerService.Add(customer);
-            return Ok();
+            return Ok(await _CustomerService.GetAll());
         }
 
 

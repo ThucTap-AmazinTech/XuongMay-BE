@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using XuongMay_BE.Contract.Repositories.Models;
+using XuongMay_BE.Contract.Repositories.Entities;
 using XuongMay_BE.Contract.Repositories.Repositories;
 using XuongMay_BE.Contract.Services.IService;
 using Task = System.Threading.Tasks.Task;
@@ -10,6 +11,7 @@ namespace XuongMay_BE.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;

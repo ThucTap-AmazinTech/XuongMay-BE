@@ -398,4 +398,8 @@ FodyWeavers.xsd
 *.sln.iml
 
 # appsettings.json
+<<<<<<< HEAD
 appsettings.json
+=======
+XuongMay_BE/appsettings.json
+>>>>>>> 1ef0235c4ca19aa2cd97e0b8322c93a6ddab5f56

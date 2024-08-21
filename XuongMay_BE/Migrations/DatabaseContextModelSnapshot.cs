@@ -25,7 +25,7 @@ namespace XuongMay_BE.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.Category", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Category", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -57,7 +57,7 @@ namespace XuongMay_BE.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.Customer", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Customer", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -97,7 +97,7 @@ namespace XuongMay_BE.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.Order", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Order", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -143,7 +143,7 @@ namespace XuongMay_BE.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.OrderDetail", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.OrderDetail", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -188,7 +188,7 @@ namespace XuongMay_BE.Migrations
                     b.ToTable("OrderDetails");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.Product", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Product", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -226,7 +226,7 @@ namespace XuongMay_BE.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.ProductionLine", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.ProductionLine", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -263,7 +263,7 @@ namespace XuongMay_BE.Migrations
                     b.ToTable("ProductionLines");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.Role", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Role", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -299,7 +299,7 @@ namespace XuongMay_BE.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.Task", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Task", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -352,7 +352,7 @@ namespace XuongMay_BE.Migrations
                     b.ToTable("Tasks");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.User", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -373,17 +373,18 @@ namespace XuongMay_BE.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image")
+                    b.Property<string>("Fullname")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetimeoffset");
@@ -391,12 +392,17 @@ namespace XuongMay_BE.Migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.User_Role", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.User_Role", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -439,15 +445,15 @@ namespace XuongMay_BE.Migrations
                     b.ToTable("User_Roles");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.Order", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Order", b =>
                 {
-                    b.HasOne("XuongMay_BE.Contract.Repositories.Models.Customer", "Customer")
+                    b.HasOne("XuongMay_BE.Contract.Repositories.Entities.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("XuongMay_BE.Contract.Repositories.Models.User", "User")
+                    b.HasOne("XuongMay_BE.Contract.Repositories.Entities.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId");
 
@@ -456,13 +462,13 @@ namespace XuongMay_BE.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.OrderDetail", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.OrderDetail", b =>
                 {
-                    b.HasOne("XuongMay_BE.Contract.Repositories.Models.Order", "Order")
+                    b.HasOne("XuongMay_BE.Contract.Repositories.Entities.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderId");
 
-                    b.HasOne("XuongMay_BE.Contract.Repositories.Models.Product", "Product")
+                    b.HasOne("XuongMay_BE.Contract.Repositories.Entities.Product", "Product")
                         .WithMany("OrderDetails")
                         .HasForeignKey("ProductId");
 
@@ -471,9 +477,9 @@ namespace XuongMay_BE.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.Product", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Product", b =>
                 {
-                    b.HasOne("XuongMay_BE.Contract.Repositories.Models.Category", "Category")
+                    b.HasOne("XuongMay_BE.Contract.Repositories.Entities.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -482,30 +488,30 @@ namespace XuongMay_BE.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.ProductionLine", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.ProductionLine", b =>
                 {
-                    b.HasOne("XuongMay_BE.Contract.Repositories.Models.User", "Manager")
+                    b.HasOne("XuongMay_BE.Contract.Repositories.Entities.User", "Manager")
                         .WithMany("ProductionLines")
                         .HasForeignKey("ManagerId");
 
                     b.Navigation("Manager");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.Task", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Task", b =>
                 {
-                    b.HasOne("XuongMay_BE.Contract.Repositories.Models.Order", "Order")
+                    b.HasOne("XuongMay_BE.Contract.Repositories.Entities.Order", "Order")
                         .WithMany("Tasks")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("XuongMay_BE.Contract.Repositories.Models.Product", "Product")
+                    b.HasOne("XuongMay_BE.Contract.Repositories.Entities.Product", "Product")
                         .WithMany("Tasks")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("XuongMay_BE.Contract.Repositories.Models.ProductionLine", "ProductionLine")
+                    b.HasOne("XuongMay_BE.Contract.Repositories.Entities.ProductionLine", "ProductionLine")
                         .WithMany("Tasks")
                         .HasForeignKey("ProductionLineId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -518,15 +524,15 @@ namespace XuongMay_BE.Migrations
                     b.Navigation("ProductionLine");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.User_Role", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.User_Role", b =>
                 {
-                    b.HasOne("XuongMay_BE.Contract.Repositories.Models.Role", "Role")
+                    b.HasOne("XuongMay_BE.Contract.Repositories.Entities.Role", "Role")
                         .WithMany("User_Role")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("XuongMay_BE.Contract.Repositories.Models.User", "User")
+                    b.HasOne("XuongMay_BE.Contract.Repositories.Entities.User", "User")
                         .WithMany("User_Role")
                         .HasForeignKey("UserId");
 
@@ -535,41 +541,41 @@ namespace XuongMay_BE.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.Category", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Category", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.Customer", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Customer", b =>
                 {
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.Order", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Order", b =>
                 {
                     b.Navigation("OrderDetails");
 
                     b.Navigation("Tasks");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.Product", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Product", b =>
                 {
                     b.Navigation("OrderDetails");
 
                     b.Navigation("Tasks");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.ProductionLine", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.ProductionLine", b =>
                 {
                     b.Navigation("Tasks");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.Role", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Role", b =>
                 {
                     b.Navigation("User_Role");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Models.User", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.User", b =>
                 {
                     b.Navigation("Orders");
 

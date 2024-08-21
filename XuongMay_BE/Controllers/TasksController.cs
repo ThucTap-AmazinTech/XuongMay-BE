@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using XuongMay_BE.Contract.Repositories.Entities;
 using XuongMay_BE.Contract.Services.IService;
+using XuongMay_BE.Core.App;
 
 namespace XuongMay_BE.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = AppRole.LineManager + "," + AppRole.Administrator)]
     public class TasksController : ControllerBase
     {
         private readonly ITasksService _TasksService;

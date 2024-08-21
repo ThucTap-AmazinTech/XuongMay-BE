@@ -1,14 +1,14 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using XuongMay_BE.Contract.Repositories.Entities;
 using XuongMay_BE.Contract.Repositories.IUnitOfWork;
 using XuongMay_BE.Contract.Services.IService;
-using XuongMay_BE.ViewModels.ViewModels;
-using Microsoft.IdentityModel.Tokens;
 using XuongMay_BE.Core.App;
+using XuongMay_BE.ViewModels.ViewModels;
 
 namespace XuongMay_BE.Services.Service
 {

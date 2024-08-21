@@ -1,11 +1,5 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
 using XuongMay_BE;
-using XuongMay_BE.Contract.Repositories.Entities;
-using XuongMay_BE.Repositories.DataContext;
 
 var builder = WebApplication.CreateBuilder(args);
 

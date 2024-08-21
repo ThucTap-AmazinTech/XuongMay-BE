@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using XuongMay_BE.Contract.Repositories.Entities;
-using XuongMay_BE.Contract.Repositories.Repositories;
 using XuongMay_BE.Contract.Services.IService;
-using XuongMay_BE.Services;
 
 
 namespace XuongMay_BE.Controllers

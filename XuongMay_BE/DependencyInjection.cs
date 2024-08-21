@@ -1,14 +1,13 @@
-﻿using XuongMay_BE.Repositories.DataContext;
-using Microsoft.EntityFrameworkCore;
-using XuongMay_BE.Contract.Services.IService;
-using XuongMay_BE.Services.Service;
-using XuongMay_BE.Services;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using XuongMay_BE.Contract.Repositories.Entities;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using XuongMay_BE.Contract.Repositories.Entities;
+using XuongMay_BE.Contract.Services.IService;
+using XuongMay_BE.Repositories.DataContext;
+using XuongMay_BE.Services;
+using XuongMay_BE.Services.Service;
 
 namespace XuongMay_BE
 {

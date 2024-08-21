@@ -391,7 +391,6 @@ namespace XuongMay_BE.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ManagerId")
-                        .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
@@ -405,12 +404,9 @@ namespace XuongMay_BE.Migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ManagerId");
 
                     b.ToTable("ProductionLines");
                 });
@@ -661,11 +657,11 @@ namespace XuongMay_BE.Migrations
 
             modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.ProductionLine", b =>
                 {
-                    b.HasOne("XuongMay_BE.Contract.Repositories.Entities.User", "User")
+                    b.HasOne("XuongMay_BE.Contract.Repositories.Entities.User", "Manager")
                         .WithMany("ProductionLines")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("ManagerId");
 
-                    b.Navigation("User");
+                    b.Navigation("Manager");
                 });
 
             modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Tasks", b =>

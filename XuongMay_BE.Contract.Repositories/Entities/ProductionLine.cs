@@ -17,12 +17,12 @@ namespace XuongMay_BE.Contract.Repositories.Entities
         public string Name { get; set; }
 
         [StringLength(450)]
-        public string ManagerId { get; set; }
+        public string? ManagerId { get; set; }
         [JsonIgnore]
-        public virtual User User { get; set; }
+        public virtual User? Manager { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [JsonIgnore]
-        public virtual ICollection<Tasks> Tasks { get; set; }
+        public virtual ICollection<Tasks>? Tasks { get; set; }
     }
 }

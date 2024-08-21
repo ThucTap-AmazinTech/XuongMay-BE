@@ -31,6 +31,8 @@ namespace XuongMay_BE.Services
 
 
             services.AddScoped<IOrderDetailService, OrderDetailService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductionLineService, ProductionLineService>();
         }
     }
 }

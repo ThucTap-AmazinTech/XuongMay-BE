@@ -31,7 +31,7 @@ namespace XuongMay_BE.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Fullname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -208,8 +208,7 @@ namespace XuongMay_BE.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ManagerId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ManagerId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -221,8 +220,8 @@ namespace XuongMay_BE.Migrations
                 {
                     table.PrimaryKey("PK_ProductionLines", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductionLines_AspNetUsers_UserId",
-                        column: x => x.UserId,
+                        name: "FK_ProductionLines_AspNetUsers_ManagerId",
+                        column: x => x.ManagerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
@@ -418,9 +417,9 @@ namespace XuongMay_BE.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductionLines_UserId",
+                name: "IX_ProductionLines_ManagerId",
                 table: "ProductionLines",
-                column: "UserId");
+                column: "ManagerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",

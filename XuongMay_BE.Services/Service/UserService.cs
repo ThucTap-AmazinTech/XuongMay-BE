@@ -42,17 +42,6 @@ namespace XuongMay_BE.Services.Service
             return _unitOfWork.GetGenericRepository<User>().GetByIdAsync(id);
         }
 
-        public async Task<User?> Login(string username, string password)
-        {
-            IGenericRepository<User> genericRepository = _unitOfWork.GetGenericRepository<User>();
-            return genericRepository.Entities.FirstOrDefault();
-        }
-
-        public Task Signup(User user)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task Update(User user)
         {
             IGenericRepository<User> genericRepository = _unitOfWork.GetGenericRepository<User>();

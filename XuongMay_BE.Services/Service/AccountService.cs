@@ -8,6 +8,7 @@ using XuongMay_BE.Contract.Repositories.IUnitOfWork;
 using XuongMay_BE.Contract.Services.IService;
 using XuongMay_BE.ViewModels.ViewModels;
 using Microsoft.IdentityModel.Tokens;
+using XuongMay_BE.Core.App;
 
 namespace XuongMay_BE.Services.Service
 {
@@ -16,19 +17,24 @@ namespace XuongMay_BE.Services.Service
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
-        public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration) 
+
+        public AccountService(IUnitOfWork unitOfWork, UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration) 
         {
+            _unitOfWork = unitOfWork;
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
+            _roleManager = roleManager;
         }
 
         public async Task<string> SignInAsync(SignInViewModel signInViewModel)
         {
-            var result = await _signInManager.PasswordSignInAsync(signInViewModel.UserName, signInViewModel.Password, false, false);
+            var user = await _userManager.FindByEmailAsync(signInViewModel.UserName);
+            var passwordValid = await _userManager.CheckPasswordAsync(user, signInViewModel.Password);
 
-            if (!result.Succeeded)
+            if (!passwordValid || user is null)
             {
                 return string.Empty;
             }
@@ -36,8 +42,14 @@ namespace XuongMay_BE.Services.Service
             var authClaims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, signInViewModel.UserName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N"))
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
             };
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+            foreach (var role in userRoles)
+            {
+                authClaims.Add(new Claim(ClaimTypes.Role, role.ToString()));
+            }
 
             var authenticationKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
             var token = new JwtSecurityToken(
@@ -47,7 +59,6 @@ namespace XuongMay_BE.Services.Service
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authenticationKey, SecurityAlgorithms.HmacSha512Signature)
                 );
-
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
@@ -61,7 +72,26 @@ namespace XuongMay_BE.Services.Service
                 UserName = signUpViewModel.Email
             };
 
-            return await _userManager.CreateAsync(user, signUpViewModel.Password);
+            var result =  await _userManager.CreateAsync(user, signUpViewModel.Password);
+
+            if (result.Succeeded)
+            {
+                // Kiểm tra các Role đã tồn tại
+                if (!await _roleManager.RoleExistsAsync(AppRole.Administrator))
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(AppRole.Administrator));
+                }
+                if (!await _roleManager.RoleExistsAsync(AppRole.LineManager))
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(AppRole.LineManager));
+                }
+                if (!await _roleManager.RoleExistsAsync(AppRole.DefaultRole))
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(AppRole.DefaultRole));
+                }
+                await _userManager.AddToRoleAsync(user, AppRole.DefaultRole);
+            }
+            return result;
         }
     }
 }

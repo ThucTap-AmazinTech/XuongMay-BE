@@ -1,16 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using XuongMay_BE.Contract.Repositories.Entities;
-using XuongMay_BE.Contract.Repositories.IUnitOfWork;
-using XuongMay_BE.Contract.Repositories.Entities;
-using XuongMay_BE.Contract.Repositories.Repositories;
+﻿using Microsoft.AspNetCore.Mvc;
 using XuongMay_BE.Contract.Services.IService;
-using XuongMay_BE.Services.Service;
 using XuongMay_BE.ViewModels.ViewModels;
 
 namespace XuongMay_BE.Controllers

@@ -3,6 +3,7 @@ using Task = System.Threading.Tasks.Task;
 
 namespace XuongMay_BE.Contract.Services.IService
 {
+  
     public interface ITaskService
     {
         Task<IList<Task>> GetAll();

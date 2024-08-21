@@ -6,18 +6,42 @@ namespace XuongMay_BE.Contract.Repositories.Entities
 {
     public class User : BaseModel
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            Orders = new HashSet<Order>();
+            ProductionLines = new HashSet<ProductionLine>();
+            User_Roles = new HashSet<User_Roles>();
+        }
+
+     
+
         [Required]
-        [MaxLength(50)]
+        [StringLength(50)]
         public string Username { get; set; }
+
         [Required]
-        [MaxLength(50)]
+        [StringLength(50)]
         public string Password { get; set; }
+
         [Required]
         public string Email { get; set; }
+
+        [Required]
         public string Fullname { get; set; }
+
+        [Required]
         public string Image { get; set; }
-        public virtual ICollection<Order>? Orders { get; }
-        public virtual ICollection<ProductionLine>? ProductionLines { get; }
-        public virtual ICollection<User_Role>? User_Role { get; }
+
+       
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Orders { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductionLine> ProductionLines { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User_Roles> User_Roles { get; set; }
     }
 }

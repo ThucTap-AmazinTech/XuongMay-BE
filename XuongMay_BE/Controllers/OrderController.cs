@@ -1,4 +1,5 @@
 ﻿
+using Castle.Core.Resource;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using XuongMay_BE.Contract.Repositories.Entities;
@@ -31,30 +32,14 @@ namespace XuongMay_BE.Controllers
                 return NotFound("Order not found!");
             return Ok(order);
         }
+       
 
-
-        //[HttpPost]
-        //public async Task<IActionResult> AddOrder([FromBody] Order order)
-        //{
-        //    var user = await _userService.GetById(orderDto.UserId);
-        //    var customer = await _customerService.GetById(orderDto.CustomerId);
-
-        //    if (user == null || customer == null)
-        //    {
-        //        return BadRequest("Invalid User or Customer ID");
-        //    }
-
-        //    var order = new Order
-        //    {
-        //        Total_amount = orderDto.Total_amount,
-        //        Note = orderDto.Note,
-        //        User = user,
-        //        Customer = customer
-        //    };
-
-        //    await _orderService.Add(order);
-        //    return Ok(await _orderService.GetAll());
-        //}
+        [HttpPost]
+        public async Task<IActionResult> AddOrder([FromBody] Order order)
+        {
+            await _OrderService.Add(order);
+            return Ok(await _OrderService.GetAll());
+        }
 
 
         [HttpDelete]

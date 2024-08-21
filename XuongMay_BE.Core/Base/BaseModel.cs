@@ -17,6 +17,7 @@ namespace XuongMay_BE.Core.Base
         }
 
         [Key]
+        [StringLength(450)]
         public string Id { get; set; }
         public string? CreatedBy { get; set; }
         public string? UpdatedBy { get; set; }

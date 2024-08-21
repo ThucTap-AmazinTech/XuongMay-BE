@@ -23,7 +23,7 @@ namespace XuongMay_BE.Repositories.DataContext
         public DbSet<Role> Roles { get; set; }
         public DbSet<Contract.Repositories.Entities.Task> Tasks { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<User_Role> User_Roles { get; set; }
+        public DbSet<User_Roles> User_Roles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

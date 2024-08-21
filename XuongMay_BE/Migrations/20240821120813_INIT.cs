@@ -15,7 +15,7 @@ namespace XuongMay_BE.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -33,7 +33,7 @@ namespace XuongMay_BE.Migrations
                 name: "Customers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -53,7 +53,7 @@ namespace XuongMay_BE.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -72,7 +72,7 @@ namespace XuongMay_BE.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -94,9 +94,9 @@ namespace XuongMay_BE.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoryId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CategoryId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -119,11 +119,11 @@ namespace XuongMay_BE.Migrations
                 name: "Orders",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Total_amount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CustomerId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -144,16 +144,18 @@ namespace XuongMay_BE.Migrations
                         name: "FK_Orders_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ProductionLines",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ManagerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ManagerId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -165,8 +167,8 @@ namespace XuongMay_BE.Migrations
                 {
                     table.PrimaryKey("PK_ProductionLines", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductionLines_Users_ManagerId",
-                        column: x => x.ManagerId,
+                        name: "FK_ProductionLines_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id");
                 });
@@ -175,10 +177,10 @@ namespace XuongMay_BE.Migrations
                 name: "User_Roles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -199,18 +201,19 @@ namespace XuongMay_BE.Migrations
                         name: "FK_User_Roles_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "OrderDetails",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: true),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OrderId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ProductId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    OrderId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    ProductId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -225,24 +228,26 @@ namespace XuongMay_BE.Migrations
                         name: "FK_OrderDetails_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderDetails_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Tasks",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    completion_rate = table.Column<int>(type: "int", nullable: true),
+                    Id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    Completion_rate = table.Column<int>(type: "int", nullable: true),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OrderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProductId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProductionLineId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    OrderId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    ProductId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    ProductionLineId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -294,9 +299,9 @@ namespace XuongMay_BE.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductionLines_ManagerId",
+                name: "IX_ProductionLines_UserId",
                 table: "ProductionLines",
-                column: "ManagerId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",

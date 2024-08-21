@@ -28,6 +28,7 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Category", b =>
                 {
                     b.Property<string>("Id")
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -60,6 +61,7 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Customer", b =>
                 {
                     b.Property<string>("Id")
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Address")
@@ -100,6 +102,7 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Order", b =>
                 {
                     b.Property<string>("Id")
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -110,6 +113,7 @@ namespace XuongMay_BE.Migrations
 
                     b.Property<string>("CustomerId")
                         .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTimeOffset>("DeletedAt")
@@ -132,6 +136,8 @@ namespace XuongMay_BE.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -146,6 +152,7 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.OrderDetail", b =>
                 {
                     b.Property<string>("Id")
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -165,9 +172,13 @@ namespace XuongMay_BE.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OrderId")
+                        .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProductId")
+                        .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("Quantity")
@@ -191,10 +202,12 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Product", b =>
                 {
                     b.Property<string>("Id")
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CategoryId")
                         .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -229,6 +242,7 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.ProductionLine", b =>
                 {
                     b.Property<string>("Id")
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -244,6 +258,8 @@ namespace XuongMay_BE.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ManagerId")
+                        .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
@@ -256,9 +272,12 @@ namespace XuongMay_BE.Migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ManagerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("ProductionLines");
                 });
@@ -266,6 +285,7 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Role", b =>
                 {
                     b.Property<string>("Id")
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -302,7 +322,11 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Task", b =>
                 {
                     b.Property<string>("Id")
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("Completion_rate")
+                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
@@ -322,14 +346,17 @@ namespace XuongMay_BE.Migrations
 
                     b.Property<string>("OrderId")
                         .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProductId")
                         .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProductionLineId")
                         .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
@@ -337,9 +364,6 @@ namespace XuongMay_BE.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("completion_rate")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -355,6 +379,7 @@ namespace XuongMay_BE.Migrations
             modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.User", b =>
                 {
                     b.Property<string>("Id")
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -402,9 +427,10 @@ namespace XuongMay_BE.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.User_Role", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.User_Roles", b =>
                 {
                     b.Property<string>("Id")
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -425,6 +451,7 @@ namespace XuongMay_BE.Migrations
 
                     b.Property<string>("RoleId")
                         .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
@@ -434,6 +461,8 @@ namespace XuongMay_BE.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -455,7 +484,9 @@ namespace XuongMay_BE.Migrations
 
                     b.HasOne("XuongMay_BE.Contract.Repositories.Entities.User", "User")
                         .WithMany("Orders")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
 
@@ -466,11 +497,15 @@ namespace XuongMay_BE.Migrations
                 {
                     b.HasOne("XuongMay_BE.Contract.Repositories.Entities.Order", "Order")
                         .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("XuongMay_BE.Contract.Repositories.Entities.Product", "Product")
                         .WithMany("OrderDetails")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Order");
 
@@ -490,11 +525,11 @@ namespace XuongMay_BE.Migrations
 
             modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.ProductionLine", b =>
                 {
-                    b.HasOne("XuongMay_BE.Contract.Repositories.Entities.User", "Manager")
+                    b.HasOne("XuongMay_BE.Contract.Repositories.Entities.User", "User")
                         .WithMany("ProductionLines")
-                        .HasForeignKey("ManagerId");
+                        .HasForeignKey("UserId");
 
-                    b.Navigation("Manager");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Task", b =>
@@ -524,17 +559,19 @@ namespace XuongMay_BE.Migrations
                     b.Navigation("ProductionLine");
                 });
 
-            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.User_Role", b =>
+            modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.User_Roles", b =>
                 {
                     b.HasOne("XuongMay_BE.Contract.Repositories.Entities.Role", "Role")
-                        .WithMany("User_Role")
+                        .WithMany("User_Roles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("XuongMay_BE.Contract.Repositories.Entities.User", "User")
-                        .WithMany("User_Role")
-                        .HasForeignKey("UserId");
+                        .WithMany("User_Roles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Role");
 
@@ -572,7 +609,7 @@ namespace XuongMay_BE.Migrations
 
             modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.Role", b =>
                 {
-                    b.Navigation("User_Role");
+                    b.Navigation("User_Roles");
                 });
 
             modelBuilder.Entity("XuongMay_BE.Contract.Repositories.Entities.User", b =>
@@ -581,7 +618,7 @@ namespace XuongMay_BE.Migrations
 
                     b.Navigation("ProductionLines");
 
-                    b.Navigation("User_Role");
+                    b.Navigation("User_Roles");
                 });
 #pragma warning restore 612, 618
         }

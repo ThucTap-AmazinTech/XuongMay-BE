@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\XuongMay_BE.Repositories\XuongMay_BE.Repositories.csproj" />
+    <ProjectReference Include="..\XuongMay_BE.ViewModels\XuongMay_BE.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

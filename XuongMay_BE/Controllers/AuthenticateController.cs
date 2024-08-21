@@ -11,6 +11,7 @@ using XuongMay_BE.Contract.Repositories.Entities;
 using XuongMay_BE.Contract.Repositories.Repositories;
 using XuongMay_BE.Contract.Services.IService;
 using XuongMay_BE.Services.Service;
+using XuongMay_BE.ViewModels.ViewModels;
 
 namespace XuongMay_BE.Controllers
 {
@@ -18,53 +19,34 @@ namespace XuongMay_BE.Controllers
     [ApiController]
     public class AuthenticateController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IAccountService _accountService;
         private readonly IConfiguration _configuration;
-        public AuthenticateController(IUserService userService, IConfiguration configuration)
+        public AuthenticateController(IAccountService accountService, IConfiguration configuration)
         {
-            _userService = userService;
+            _accountService = accountService;
             _configuration = configuration;
         }
 
-        [HttpPost("Login")]
-        public async Task<IActionResult> Validate(string username, string password)
+        [HttpPost("SignIn")]
+        public async Task<IActionResult> SignIn(SignInViewModel signInViewModel)
         {
-            User user = await _userService.Login(username, password);
-            if (user is null)
+            var result = await _accountService.SignInAsync(signInViewModel);
+            if (string.IsNullOrEmpty(result))
             {
-                return NotFound("User not found! Validation failed!");
+                return Unauthorized();
             }
-            return Ok(new
-            {
-                Success = true,
-                //Token = GenerateToken(user)
-            });
+            return Ok(result);
         }
 
-        //private string GenerateToken(User user)
-        //{
-        //    var jwtTokenHandler = new JwtSecurityTokenHandler();
-        //    var secretKeyBytes = Encoding.UTF8.GetBytes(_configuration.GetValue<string>("AppSettings:SecretKey"));
-        //    var tokenDescription = new SecurityTokenDescriptor
-        //    {
-        //        Subject = new ClaimsIdentity(new[]
-        //        {
-        //            new Claim("Username", user.Username),
-        //            new Claim("Email", user.Email),
-        //            new Claim("TokenId", Guid.NewGuid().ToString("N"))
-        //        }),
-        //        Expires = DateTime.UtcNow.AddMinutes(10),
-        //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyBytes), SecurityAlgorithms.HmacSha256Signature)
-        //    };
-        //    var token = jwtTokenHandler.CreateToken(tokenDescription);
-        //    return jwtTokenHandler.WriteToken(token);
-        //}
-
-        [HttpPost("Signup")]
-        public async Task<IActionResult> Signup(User user)
+        [HttpPost("SignUp")]
+        public async Task<IActionResult> SignUp(SignUpViewModel signUpViewModel)
         {
-            await _userService.Add(user);
-            return Ok();
+            var result = await _accountService.SignUpAsync(signUpViewModel);
+            if (result.Succeeded)
+            {
+                return Ok(result.Succeeded);
+            }
+            return BadRequest(result.Errors);
         }
     }
 }

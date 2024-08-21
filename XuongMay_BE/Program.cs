@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using XuongMay_BE;
+using XuongMay_BE.Contract.Repositories.Entities;
+using XuongMay_BE.Repositories.DataContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,24 +16,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddConfig(builder.Configuration);
-
-var secretKey = builder.Configuration["AppSettings:SecretKey"];
-var secretKeyBytes = Encoding.UTF8.GetBytes(secretKey);
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        // Auto-generate token
-        ValidateIssuer = false,
-        ValidateAudience = false,
-
-        // Sign token
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(secretKeyBytes)
-    };
-
-});
 
 builder.Services.AddSwaggerGen(c => {
     c.SwaggerDoc("v1", new OpenApiInfo
@@ -64,8 +49,6 @@ builder.Services.AddSwaggerGen(c => {
 //{
 //    options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnect"));
 //});
-
-
 
 var app = builder.Build();
 

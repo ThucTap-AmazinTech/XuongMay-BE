@@ -17,9 +17,7 @@ namespace XuongMay_BE.Contract.Repositories.Entities
 
         [Required]
         public string Fullname { get; set; }
-
-        [Required]
-        public string Image { get; set; }
+        public string? Image { get; set; }
 
         [Key]
         [StringLength(450)]

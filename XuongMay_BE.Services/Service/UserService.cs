@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using XuongMay_BE.Contract.Repositories.Entities;
 using XuongMay_BE.Contract.Repositories.IUnitOfWork;
-using XuongMay_BE.Contract.Repositories.Entities;
-using XuongMay_BE.Contract.Services.IService;
-using Task = System.Threading.Tasks.Task;
 using XuongMay_BE.Contract.Repositories.Repositories;
+using XuongMay_BE.Contract.Services.IService;
 using XuongMay_BE.Core.Utils;
-using Microsoft.EntityFrameworkCore;
-using XuongMay_BE.Contract.Repositories.Entities;
+using Task = System.Threading.Tasks.Task;
 
 namespace XuongMay_BE.Services.Service
 {

@@ -12,8 +12,8 @@ using XuongMay_BE.Repositories.DataContext;
 namespace XuongMay_BE.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240821142953_INIT")]
-    partial class INIT
+    [Migration("20240821154036_NullAble")]
+    partial class NullAble
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -512,7 +512,6 @@ namespace XuongMay_BE.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")

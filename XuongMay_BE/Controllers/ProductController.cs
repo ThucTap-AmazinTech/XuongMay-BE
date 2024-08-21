@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using XuongMay_BE.Contract.Repositories.Entities;
 using XuongMay_BE.Contract.Services.IService;
+using XuongMay_BE.Core.Query;
 
 
 namespace XuongMay_BE.Controllers
@@ -16,10 +17,12 @@ namespace XuongMay_BE.Controllers
             _ProductService = ProductService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllProducts()
+        public async Task<IActionResult> GetAllProducts([FromQuery] QueryObject query)
         {
-            IList<Product> categories = await _ProductService.GetAll();
-            return Ok(categories);
+            IList<Product> products = await _ProductService.GetAll();
+            var skipNumber = (query.PageNumber - 1) * query.PageSize;
+
+            return Ok(products.Skip(skipNumber).Take(query.PageSize));
         }
 
         [HttpGet("{id}")]

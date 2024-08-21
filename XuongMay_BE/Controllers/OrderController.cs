@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using XuongMay_BE.Contract.Repositories.Entities;
 using XuongMay_BE.Contract.Services.IService;
+using XuongMay_BE.Core.Query;
 
 namespace XuongMay_BE.Controllers
 {
@@ -14,10 +15,12 @@ namespace XuongMay_BE.Controllers
             _OrderService = OrderService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllOrders()
+        public async Task<IActionResult> GetAllOrders([FromQuery] QueryObject query)
         {
             IList<Order> orders = await _OrderService.GetAll();
-            return Ok(orders);
+            var skipNumber = (query.PageNumber - 1) * query.PageSize;
+
+            return Ok(orders.Skip(skipNumber).Take(query.PageSize));
         }
 
         [HttpGet("{id}")]

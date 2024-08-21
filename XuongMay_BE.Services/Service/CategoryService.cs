@@ -8,6 +8,8 @@ using XuongMay_BE.Contract.Repositories.Entities;
 using XuongMay_BE.Contract.Repositories.Repositories;
 using XuongMay_BE.Contract.Services.IService;
 using Task = System.Threading.Tasks.Task;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
 
 namespace XuongMay_BE.Services.Service
 {

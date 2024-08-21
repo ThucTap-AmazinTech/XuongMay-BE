@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.ObjectModel;
 using XuongMay_BE.Contract.Repositories.Entities;
 using XuongMay_BE.Contract.Services.IService;
+using XuongMay_BE.Core.Base;
+using XuongMay_BE.Core.Query;
 
 namespace XuongMay_BE.Controllers
 {
@@ -17,10 +20,12 @@ namespace XuongMay_BE.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllCategories()
+        public async Task<IActionResult> GetAllCategories([FromQuery] QueryObject query)
         {
             IList<Category> categories = await _categoryService.GetAll();
-            return Ok(categories);
+            var skipNumber = (query.PageNumber - 1) * query.PageSize;
+            
+            return Ok(categories.Skip(skipNumber).Take(query.PageSize));
         }
 
         [HttpGet("{id}")]

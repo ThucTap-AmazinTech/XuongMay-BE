@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using XuongMay_BE.Contract.Repositories.Entities;
 using XuongMay_BE.Contract.Services.IService;
+using XuongMay_BE.Core.Query;
 
 
 namespace XuongMay_BE.Controllers
@@ -16,10 +17,12 @@ namespace XuongMay_BE.Controllers
             _CustomerService = CustomerService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllCustomers()
+        public async Task<IActionResult> GetAllCustomers([FromQuery] QueryObject query)
         {
             IList<Customer> categories = await _CustomerService.GetAll();
-            return Ok(categories);
+            var skipNumber = (query.PageNumber - 1) * query.PageSize;
+
+            return Ok(categories.Skip(skipNumber).Take(query.PageSize));
         }
 
         [HttpGet("{id}")]

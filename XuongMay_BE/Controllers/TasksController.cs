@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using XuongMay_BE.Contract.Repositories.Entities;
 using XuongMay_BE.Contract.Services.IService;
 using XuongMay_BE.Core.App;
+using XuongMay_BE.Core.Query;
 
 namespace XuongMay_BE.Controllers
 {
@@ -18,10 +19,12 @@ namespace XuongMay_BE.Controllers
             _TasksService = TasksService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllTaskss()
+        public async Task<IActionResult> GetAllTaskss([FromQuery] QueryObject query)
         {
-            IList<Tasks> categories = await _TasksService.GetAll();
-            return Ok(categories);
+            IList<Tasks> tasks = await _TasksService.GetAll();
+            var skipNumber = (query.PageNumber - 1) * query.PageSize;
+
+            return Ok(tasks.Skip(skipNumber).Take(query.PageSize));
         }
 
         [HttpGet("{id}")]

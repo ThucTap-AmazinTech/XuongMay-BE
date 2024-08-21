@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using XuongMay_BE.Contract.Repositories.IUnitOfWork;
+﻿using XuongMay_BE.Contract.Repositories.IUnitOfWork;
 using XuongMay_BE.Contract.Repositories.Entities;
 using XuongMay_BE.Contract.Repositories.Repositories;
 using XuongMay_BE.Contract.Services.IService;

@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using XuongMay_BE.Core.Base;
 
 namespace XuongMay_BE.Contract.Repositories.Entities
 {
-    public class Task : BaseModel
+    public class Tasks : BaseModel
     {
         public int? Completion_rate { get; set; }
 
@@ -20,13 +21,8 @@ namespace XuongMay_BE.Contract.Repositories.Entities
 
         [Required]
         [StringLength(450)]
+        [JsonIgnore]
         public string ProductionLineId { get; set; }
 
-       
-        public virtual Order Order { get; set; }
-
-        public virtual ProductionLine ProductionLine { get; set; }
-
-        public virtual Product Product { get; set; }
     }
 }

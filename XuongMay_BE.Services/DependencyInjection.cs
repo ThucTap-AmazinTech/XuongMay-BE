@@ -24,8 +24,13 @@ namespace XuongMay_BE.Services
         {
             services.AddScoped<ICustomerService, CustomerService>();
 
-            // Đăng ký thêm các service khác nếu có
+           
             services.AddScoped<IOrderService, OrderService>();
+
+            services.AddScoped<ITasksService, TasksService>();
+
+
+            services.AddScoped<IOrderDetailService, OrderDetailService>();
         }
     }
 }

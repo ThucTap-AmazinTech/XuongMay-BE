@@ -4,7 +4,7 @@ using Task = System.Threading.Tasks.Task;
 
 namespace XuongMay_BE.Contract.Services.IService
 {
-    public interface IOrderDetailDetailService
+    public interface IOrderDetailService
     {
         Task<IList<OrderDetail>> GetAll();
         Task<OrderDetail?> GetById(object id);

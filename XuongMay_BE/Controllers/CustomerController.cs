@@ -39,9 +39,6 @@ namespace XuongMay_BE.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCustomer([FromBody] Customer customer)
         {
-            // Nếu Orders là null, khởi tạo nó với mảng rỗng
-           
-
             await _CustomerService.Add(customer);
             return Ok(await _CustomerService.GetAll());
         }

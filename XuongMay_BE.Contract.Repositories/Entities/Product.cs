@@ -11,7 +11,7 @@ namespace XuongMay_BE.Contract.Repositories.Entities
         public Product()
         {
             OrderDetails = new HashSet<OrderDetail>();
-            Tasks = new HashSet<Task>();
+            Tasks = new HashSet<Tasks>();
         }
 
 
@@ -30,6 +30,6 @@ namespace XuongMay_BE.Contract.Repositories.Entities
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [JsonIgnore]
-        public virtual ICollection<Task> Tasks { get; set; }
+        public virtual ICollection<Tasks> Tasks { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace XuongMay_BE.Repositories.DataContext
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductionLine> ProductionLines { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<Contract.Repositories.Entities.Task> Tasks { get; set; }
+        public DbSet<Contract.Repositories.Entities.Tasks> Tasks { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<User_Roles> User_Roles { get; set; }
 

@@ -6,18 +6,18 @@ using Task = System.Threading.Tasks.Task;
 
 namespace XuongMay_BE.Services.Service
 {
-    public class TaskService : ITaskService
+    public class TasksService : ITasksService
     {
         public readonly IUnitOfWork _unitOfWork;
 
-        public TaskService(IUnitOfWork unitOfWork)
+        public TasksService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task Add(Task task)
+        public async Task Add(Tasks task)
         {
             task.Id = Guid.NewGuid().ToString("N");
-            IGenericRepository<Task> genericRepository = _unitOfWork.GetGenericRepository<Task>();
+            IGenericRepository<Tasks> genericRepository = _unitOfWork.GetGenericRepository<Tasks>();
             await genericRepository.AddAsync(task);
             await _unitOfWork.SaveAsync();
         }
@@ -29,20 +29,20 @@ namespace XuongMay_BE.Services.Service
             await _unitOfWork.SaveAsync();
         }
 
-        public Task<IList<Task>> GetAll()
+        public Task<IList<Tasks>> GetAll()
         {
-            return _unitOfWork.GetGenericRepository<Task>().GetAllAsync();
+            return _unitOfWork.GetGenericRepository<Tasks>().GetAllAsync();
         }
 
-        public Task<Task?> GetById(object id)
+        public Task<Tasks?> GetById(object id)
         {
-            return _unitOfWork.GetGenericRepository<Task>().GetByIdAsync(id);
+            return _unitOfWork.GetGenericRepository<Tasks>().GetByIdAsync(id);
         }
 
-        public async Task Update(Task Task)
+        public async Task Update(Tasks tasks)
         {
-            IGenericRepository<Task> genericRepository = _unitOfWork.GetGenericRepository<Task>();
-            await genericRepository.UpdateAsync(Task);
+            IGenericRepository<Tasks> genericRepository = _unitOfWork.GetGenericRepository<Tasks>();
+            await genericRepository.UpdateAsync(tasks);
             await _unitOfWork.SaveAsync();
         }
     }

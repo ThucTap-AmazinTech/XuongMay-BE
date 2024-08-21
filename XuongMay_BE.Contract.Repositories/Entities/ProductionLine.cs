@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using XuongMay_BE.Core.Base;
 
 namespace XuongMay_BE.Contract.Repositories.Entities
@@ -8,7 +9,7 @@ namespace XuongMay_BE.Contract.Repositories.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ProductionLine()
         {
-            Tasks = new HashSet<Task>();
+            Tasks = new HashSet<Tasks>();
         }
 
 
@@ -17,10 +18,11 @@ namespace XuongMay_BE.Contract.Repositories.Entities
 
         [StringLength(450)]
         public string ManagerId { get; set; }
-
+        [JsonIgnore]
         public virtual User User { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Task> Tasks { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Tasks> Tasks { get; set; }
     }
 }

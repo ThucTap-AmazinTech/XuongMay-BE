@@ -21,4 +21,8 @@
     <ProjectReference Include="..\XuongMay_BE.Services\XuongMay_BE.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

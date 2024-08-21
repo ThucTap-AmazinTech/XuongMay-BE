@@ -37,28 +37,28 @@ namespace XuongMay_BE.Controllers
             return Ok(new
             {
                 Success = true,
-                Token = GenerateToken(user)
+                //Token = GenerateToken(user)
             });
         }
 
-        private string GenerateToken(User user)
-        {
-            var jwtTokenHandler = new JwtSecurityTokenHandler();
-            var secretKeyBytes = Encoding.UTF8.GetBytes(_configuration.GetValue<string>("AppSettings:SecretKey"));
-            var tokenDescription = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim("Username", user.Username),
-                    new Claim("Email", user.Email),
-                    new Claim("TokenId", Guid.NewGuid().ToString("N"))
-                }),
-                Expires = DateTime.UtcNow.AddMinutes(10),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyBytes), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = jwtTokenHandler.CreateToken(tokenDescription);
-            return jwtTokenHandler.WriteToken(token);
-        }
+        //private string GenerateToken(User user)
+        //{
+        //    var jwtTokenHandler = new JwtSecurityTokenHandler();
+        //    var secretKeyBytes = Encoding.UTF8.GetBytes(_configuration.GetValue<string>("AppSettings:SecretKey"));
+        //    var tokenDescription = new SecurityTokenDescriptor
+        //    {
+        //        Subject = new ClaimsIdentity(new[]
+        //        {
+        //            new Claim("Username", user.Username),
+        //            new Claim("Email", user.Email),
+        //            new Claim("TokenId", Guid.NewGuid().ToString("N"))
+        //        }),
+        //        Expires = DateTime.UtcNow.AddMinutes(10),
+        //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyBytes), SecurityAlgorithms.HmacSha256Signature)
+        //    };
+        //    var token = jwtTokenHandler.CreateToken(tokenDescription);
+        //    return jwtTokenHandler.WriteToken(token);
+        //}
 
         [HttpPost("Signup")]
         public async Task<IActionResult> Signup(User user)

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using XuongMay_BE.Contract.Repositories.Entities;
 
 namespace XuongMay_BE.Repositories.DataContext
 {
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : IdentityDbContext<User>
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
@@ -20,13 +21,14 @@ namespace XuongMay_BE.Repositories.DataContext
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductionLine> ProductionLines { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public DbSet<Contract.Repositories.Entities.Tasks> Tasks { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<User_Roles> User_Roles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Call base OnModelCreating
+            base.OnModelCreating(modelBuilder);
+
             // Chuyển đổi giá trị thành decimal
             modelBuilder.Entity<Order>()
                 .Property(o => o.Total_amount)

@@ -7,6 +7,7 @@ namespace XuongMay_BE.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _OrderService;
